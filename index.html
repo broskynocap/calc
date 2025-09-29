@@ -89,7 +89,7 @@
   </div>
 </div>
 
-<!-- Secret screen with editable gallery -->
+<!-- Secret screen with 50 galleries -->
 <div class="secret-screen" id="secretScreen">
   <button class="close-secret" id="closeSecret">✕</button>
   <h2>Secret Gallery</h2>
@@ -97,25 +97,11 @@
   <div class="image-list" id="imageList">
     <button class="back-button" id="backButton">← Back</button>
     <h3 id="galleryTitle"></h3>
-    <button class="back-button" id="editGalleryBtn">✎ Edit Gallery</button>
     <div class="images-container" id="imagesContainer"></div>
   </div>
   <div class="fullscreen-modal" id="fullscreenModal">
     <span class="close-fullscreen" id="closeFullscreen">✕</span>
     <img id="fullscreenImg" src="" alt="Full screen image">
-  </div>
-</div>
-
-<!-- Edit modal -->
-<div class="code-modal" id="editModal">
-  <div class="code-container">
-    <h3>Edit Gallery</h3>
-    <input type="text" id="galleryNameInput" class="code-input" placeholder="Gallery name">
-    <textarea id="galleryImagesInput" class="code-input" rows="6" placeholder="Enter image URLs (one per line)"></textarea>
-    <div class="code-buttons">
-      <button class="code-button submit-code" id="saveGallery">Save</button>
-      <button class="code-button cancel-code" id="cancelEdit">Cancel</button>
-    </div>
   </div>
 </div>
 
@@ -141,25 +127,33 @@ codeInput.addEventListener('keypress', e=>{if(e.key==='Enter') submitCode.click(
 codeModal.addEventListener('click', e=>{if(e.target===codeModal){codeModal.style.display='none'; codeInput.value='';}});
 closeSecret.addEventListener('click',()=>{secretScreen.style.display='none';});
 
-// --- Gallery system ---
-let galleries = [
-  { name: "Travel", images: ["https://picsum.photos/id/1015/400/300","https://picsum.photos/id/1020/400/300"] },
-  { name: "Nature", images: ["https://picsum.photos/id/103/400/300","https://picsum.photos/id/104/400/300"] },
-  { name: "Cities", images: ["https://picsum.photos/id/1060/400/300","https://picsum.photos/id/1070/400/300"] }
-];
+// --- Define 50 galleries with editable names + images ---
+let galleries = [];
+for(let i=1;i<=50;i++){
+  galleries.push({
+    name: "Gallery " + i, 
+    images: [
+      `https://picsum.photos/seed/${i}-1/400/300`,
+      `https://picsum.photos/seed/${i}-2/400/300`,
+      `https://picsum.photos/seed/${i}-3/400/300`,
+      `https://picsum.photos/seed/${i}-4/400/300`,
+      `https://picsum.photos/seed/${i}-5/400/300`,
+      `https://picsum.photos/seed/${i}-6/400/300`,
+      `https://picsum.photos/seed/${i}-7/400/300`,
+      `https://picsum.photos/seed/${i}-8/400/300`,
+      `https://picsum.photos/seed/${i}-9/400/300`,
+      `https://picsum.photos/seed/${i}-10/400/300`
+    ]
+  });
+}
+
+// You can rename any gallery or change image URLs directly above
 
 const galleryButtons=document.getElementById("galleryButtons");
 const imageList=document.getElementById("imageList");
 const imagesContainer=document.getElementById("imagesContainer");
 const backButton=document.getElementById("backButton");
 const galleryTitle=document.getElementById("galleryTitle");
-const editGalleryBtn=document.getElementById("editGalleryBtn");
-
-const editModal=document.getElementById("editModal");
-const galleryNameInput=document.getElementById("galleryNameInput");
-const galleryImagesInput=document.getElementById("galleryImagesInput");
-const saveGallery=document.getElementById("saveGallery");
-const cancelEdit=document.getElementById("cancelEdit");
 
 const fullscreenModal=document.getElementById("fullscreenModal");
 const fullscreenImg=document.getElementById("fullscreenImg");
@@ -192,24 +186,6 @@ function openGallery(index){
   });
 }
 backButton.addEventListener("click",()=>{galleryButtons.style.display="grid"; imageList.style.display="none"; currentGalleryIndex=null;});
-
-// Edit gallery
-editGalleryBtn.addEventListener("click",()=>{
-  if(currentGalleryIndex===null) return;
-  const g=galleries[currentGalleryIndex];
-  galleryNameInput.value=g.name;
-  galleryImagesInput.value=g.images.join("\n");
-  editModal.style.display="flex";
-});
-saveGallery.addEventListener("click",()=>{
-  if(currentGalleryIndex===null) return;
-  galleries[currentGalleryIndex].name=galleryNameInput.value.trim()||"Untitled";
-  galleries[currentGalleryIndex].images=galleryImagesInput.value.split("\n").map(s=>s.trim()).filter(Boolean);
-  editModal.style.display="none";
-  openGallery(currentGalleryIndex);
-  renderGalleryButtons();
-});
-cancelEdit.addEventListener("click",()=>{editModal.style.display="none";});
 
 // Fullscreen image
 closeFullscreen.addEventListener("click",()=>{fullscreenModal.style.display="none";});
