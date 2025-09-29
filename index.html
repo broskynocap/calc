@@ -13,6 +13,7 @@
     }
 
     body {
+      position: relative; /* for secret button positioning */
       background-color: #121212;
       color: #e0e0e0;
       min-height: 100vh;
@@ -44,6 +45,7 @@
       max-width: 1200px;
       margin: 0 auto;
       width: 100%;
+      position: relative;
     }
 
     .calculator-container {
@@ -108,9 +110,9 @@
       color: #888888;
     }
 
-    /* Secret button styles */
+    /* Secret button styles - positioned at bottom-right of page content */
     .secret-button {
-      position: fixed;
+      position: absolute;
       bottom: 20px;
       right: 20px;
       width: 40px;
@@ -158,68 +160,83 @@
       padding: 0.5rem;
     }
 
-    /* Code input modal */
-    .code-modal {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.8);
-      z-index: 3000;
-      display: none;
-      align-items: center;
-      justify-content: center;
+    /* Gallery buttons and images */
+    .gallery-buttons {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: 0.5rem;
+      margin-top: 1rem;
     }
 
-    .code-container {
-      background-color: #1e1e1e;
-      padding: 2rem;
-      border-radius: 8px;
-      width: 90%;
-      max-width: 400px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-    }
-
-    .code-container h3 {
-      color: #ffffff;
-      margin-bottom: 1rem;
-      text-align: center;
-    }
-
-    .code-input {
-      width: 100%;
+    .gallery-buttons button {
       padding: 0.8rem;
       background-color: #252525;
-      border: 1px solid #333;
+      border: 1px solid #444;
+      color: #fff;
+      cursor: pointer;
       border-radius: 4px;
-      color: #ffffff;
-      font-size: 1rem;
+      font-size: 0.9rem;
+    }
+
+    .image-list {
+      margin-top: 1rem;
+      width: 100%;
+    }
+
+    .back-button {
       margin-bottom: 1rem;
-    }
-
-    .code-buttons {
-      display: flex;
-      gap: 1rem;
-    }
-
-    .code-button {
-      flex: 1;
-      padding: 0.8rem;
+      padding: 0.6rem 1rem;
+      background-color: #4dabf7;
       border: none;
       border-radius: 4px;
       cursor: pointer;
-      font-weight: 600;
-    }
-
-    .submit-code {
-      background-color: #4dabf7;
       color: #121212;
+      font-weight: bold;
     }
 
-    .cancel-code {
-      background-color: #333;
-      color: #ffffff;
+    .images-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 0.5rem;
+    }
+
+    .images-container img {
+      width: 100%;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .images-container img:hover {
+      transform: scale(1.05);
+    }
+
+    .fullscreen-modal {
+      display: none;
+      position: fixed;
+      top:0;
+      left:0;
+      width:100%;
+      height:100%;
+      background: rgba(0,0,0,0.95);
+      z-index: 5000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .fullscreen-modal img {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 8px;
+    }
+
+    .close-fullscreen {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      color: #fff;
+      font-size: 2rem;
+      cursor: pointer;
     }
 
     @media (max-width: 768px) {
@@ -264,90 +281,98 @@
         <p>Get detailed explanations for your calculations to better understand the solving process.</p>
       </div>
     </div>
+
+    <!-- Secret button positioned relative to page content -->
+    <button class="secret-button" id="secretButton" aria-label="Hidden access button"></button>
   </main>
 
   <footer>
     <p></p>
   </footer>
 
-  <!-- Secret invisible button -->
-  <button class="secret-button" id="secretButton" aria-label="Hidden access button"></button>
+  <!-- Secret screen with gallery -->
+  <div class="secret-screen" id="secretScreen">
+    <button class="close-secret" id="closeSecret">✕</button>
+    <h2>Secret Gallery</h2>
+    <div class="gallery-buttons" id="galleryButtons"></div>
 
-  <!-- Code input modal -->
-  <div class="code-modal" id="codeModal">
-    <div class="code-container">
-      <h3>Enter Secret Code</h3>
-      <input type="password" class="code-input" id="codeInput" placeholder="Enter code...">
-      <div class="code-buttons">
-        <button class="code-button submit-code" id="submitCode">Submit</button>
-        <button class="code-button cancel-code" id="cancelCode">Cancel</button>
-      </div>
+    <div class="image-list" id="imageList" style="display:none;">
+      <button class="back-button" id="backButton">← Back</button>
+      <div class="images-container" id="imagesContainer"></div>
+    </div>
+
+    <!-- Fullscreen modal for images -->
+    <div class="fullscreen-modal" id="fullscreenModal">
+      <span class="close-fullscreen" id="closeFullscreen">✕</span>
+      <img id="fullscreenImg" src="" alt="Full screen image">
     </div>
   </div>
 
-  <!-- Secret screen with Google Drive iframe -->
-  <div class="secret-screen" id="secretScreen">
-    <button class="close-secret" id="closeSecret">✕</button>
-    <h2>Secret Drive</h2>
-    <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vRpbVtUu5NJIxQF0jodHeBGOZxv6LmHjk5T14uqfdkNfubHsWQNmVw_-JkMnCGFJeuN4h-QH6IGBnfI/pubembed?start=false&loop=false&delayms=60000" frameborder="0" width="960" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
-  </div>
-
   <script>
-    // Get DOM elements
+    // Secret screen logic
     const secretButton = document.getElementById('secretButton');
-    const codeModal = document.getElementById('codeModal');
-    const codeInput = document.getElementById('codeInput');
-    const submitCode = document.getElementById('submitCode');
-    const cancelCode = document.getElementById('cancelCode');
     const secretScreen = document.getElementById('secretScreen');
     const closeSecret = document.getElementById('closeSecret');
+    const galleryButtons = document.getElementById('galleryButtons');
+    const imageList = document.getElementById('imageList');
+    const imagesContainer = document.getElementById('imagesContainer');
+    const backButton = document.getElementById('backButton');
+    const fullscreenModal = document.getElementById('fullscreenModal');
+    const fullscreenImg = document.getElementById('fullscreenImg');
+    const closeFullscreen = document.getElementById('closeFullscreen');
 
-    // Show code modal when secret button is clicked
+    // Show secret screen
     secretButton.addEventListener('click', () => {
-      codeModal.style.display = 'flex';
-      codeInput.focus();
-    });
-
-    // Submit code
-    submitCode.addEventListener('click', () => {
-      const code = codeInput.value.trim();
-      if (code === '768') {
-        window.location.href = 'https://github.com';
-      } else if (code === '2020') {
-        codeModal.style.display = 'none';
-        secretScreen.style.display = 'flex';
-        codeInput.value = '';
-      } else {
-        alert('Invalid code! Try again.');
-        codeInput.value = '';
-        codeInput.focus();
-      }
-    });
-
-    // Cancel code input
-    cancelCode.addEventListener('click', () => {
-      codeModal.style.display = 'none';
-      codeInput.value = '';
+      secretScreen.style.display = 'flex';
     });
 
     // Close secret screen
     closeSecret.addEventListener('click', () => {
       secretScreen.style.display = 'none';
+      galleryButtons.style.display = 'grid';
+      imageList.style.display = 'none';
+      imagesContainer.innerHTML = '';
     });
 
-    // Allow pressing Enter to submit code
-    codeInput.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') {
-        submitCode.click();
+    // Generate 50 gallery buttons
+    for (let i = 1; i <= 50; i++) {
+      const btn = document.createElement('button');
+      btn.textContent = `Gallery ${i}`;
+      btn.addEventListener('click', () => openGallery(i));
+      galleryButtons.appendChild(btn);
+    }
+
+    // Open gallery function
+    function openGallery(id) {
+      galleryButtons.style.display = 'none';
+      imageList.style.display = 'block';
+      imagesContainer.innerHTML = '';
+
+      for (let j = 1; j <= 10; j++) {
+        const img = document.createElement('img');
+        img.src = `https://picsum.photos/seed/${id}-${j}/400/300`;
+        img.alt = `Gallery ${id} Image ${j}`;
+        img.addEventListener('click', () => {
+          fullscreenImg.src = img.src;
+          fullscreenModal.style.display = 'flex';
+        });
+        imagesContainer.appendChild(img);
       }
+    }
+
+    // Back button
+    backButton.addEventListener('click', () => {
+      galleryButtons.style.display = 'grid';
+      imageList.style.display = 'none';
+      imagesContainer.innerHTML = '';
     });
 
-    // Close modal if clicked outside
-    codeModal.addEventListener('click', (e) => {
-      if (e.target === codeModal) {
-        codeModal.style.display = 'none';
-        codeInput.value = '';
-      }
+    // Fullscreen modal
+    closeFullscreen.addEventListener('click', () => {
+      fullscreenModal.style.display = 'none';
+    });
+    fullscreenModal.addEventListener('click', (e) => {
+      if (e.target === fullscreenModal) fullscreenModal.style.display = 'none';
     });
   </script>
 </body>
