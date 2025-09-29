@@ -89,7 +89,7 @@
   </div>
 </div>
 
-<!-- Secret screen with 50 galleries -->
+<!-- Secret screen with 10 galleries -->
 <div class="secret-screen" id="secretScreen">
   <button class="close-secret" id="closeSecret">✕</button>
   <h2>Secret Gallery</h2>
@@ -127,7 +127,7 @@ codeInput.addEventListener('keypress', e=>{if(e.key==='Enter') submitCode.click(
 codeModal.addEventListener('click', e=>{if(e.target===codeModal){codeModal.style.display='none'; codeInput.value='';}});
 closeSecret.addEventListener('click',()=>{secretScreen.style.display='none';});
 
-// --- Define 50 galleries with editable names + images ---
+// --- Define 10 galleries with editable names + images ---
 // EASILY CUSTOMIZE YOUR GALLERIES HERE:
 // 1. Change gallery names by editing the "name" property
 // 2. Change image URLs by editing the URLs in the "images" arrays
@@ -284,25 +284,6 @@ let galleries = [
     ]
   }
 ];
-
-// Add more galleries to reach 50 total
-for(let i=galleries.length+1;i<=50;i++){
-  galleries.push({
-    name: "Gallery " + i, 
-    images: [
-      `https://picsum.photos/seed/${i}-1/400/300`,
-      `https://picsum.photos/seed/${i}-2/400/300`,
-      `https://picsum.photos/seed/${i}-3/400/300`,
-      `https://picsum.photos/seed/${i}-4/400/300`,
-      `https://picsum.photos/seed/${i}-5/400/300`,
-      `https://picsum.photos/seed/${i}-6/400/300`,
-      `https://picsum.photos/seed/${i}-7/400/300`,
-      `https://picsum.photos/seed/${i}-8/400/300`,
-      `https://picsum.photos/seed/${i}-9/400/300`,
-      `https://picsum.photos/seed/${i}-10/400/300`
-    ]
-  });
-}
 
 const galleryButtons=document.getElementById("galleryButtons");
 const imageList=document.getElementById("imageList");
