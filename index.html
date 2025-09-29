@@ -142,42 +142,7 @@
     .secret-screen h2 {
       color: #ffffff;
       font-size: 2.5rem;
-      margin-bottom: 2rem;
-      text-align: center;
-    }
-
-    .secret-gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 1.5rem;
-      max-width: 1000px;
-      width: 100%;
-      margin-bottom: 2rem;
-    }
-
-    .secret-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .secret-image {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: transform 0.3s ease;
-    }
-
-    .secret-image:hover {
-      transform: scale(1.05);
-    }
-
-    .secret-caption {
-      margin-top: 0.5rem;
-      color: #bbbbbb;
-      font-size: 0.9rem;
+      margin-bottom: 1rem;
       text-align: center;
     }
 
@@ -191,22 +156,6 @@
       font-size: 1.5rem;
       cursor: pointer;
       padding: 0.5rem;
-    }
-
-    .note-button {
-      padding: 0.8rem 1.5rem;
-      background-color: #4dabf7;
-      border: none;
-      border-radius: 6px;
-      color: #121212;
-      font-weight: 600;
-      cursor: pointer;
-      margin-top: 1rem;
-      transition: background 0.3s ease;
-    }
-
-    .note-button:hover {
-      background-color: #74c0fc;
     }
 
     /* Code input modal */
@@ -273,95 +222,12 @@
       color: #ffffff;
     }
 
-    /* Lightbox fullscreen modal */
-    .lightbox {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0,0,0,0.95);
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      z-index: 4000;
-      padding: 1rem;
-      animation: fadeIn 0.3s ease;
-    }
-
-    .lightbox img {
-      max-width: 90%;
-      max-height: 70%;
-      border-radius: 8px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.8);
-    }
-
-    .lightbox-caption {
-      margin-top: 1rem;
-      color: #eeeeee;
-      font-size: 1.1rem;
-      text-align: center;
-      max-width: 80%;
-    }
-
-    .lightbox-close {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      font-size: 2rem;
-      color: #ffffff;
-      cursor: pointer;
-    }
-
-    /* Note screen */
-    .note-screen {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: #ffffff;
-      color: #121212;
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      padding: 2rem;
-      z-index: 5000;
-      overflow-y: auto;
-    }
-
-    .note-screen h2 {
-      margin-bottom: 1rem;
-    }
-
-    .close-note {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      font-size: 1.5rem;
-      background: none;
-      border: none;
-      cursor: pointer;
-      color: #121212;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    /* Responsive adjustments */
     @media (max-width: 768px) {
       .calculator-frame {
         height: 500px;
       }
       .features {
         grid-template-columns: 1fr;
-      }
-      .secret-gallery {
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
       }
     }
   </style>
@@ -419,51 +285,15 @@
     </div>
   </div>
 
-  <!-- Secret screen with images -->
+  <!-- Secret screen with Google Drive iframe -->
   <div class="secret-screen" id="secretScreen">
     <button class="close-secret" id="closeSecret">✕</button>
-    <h2>Secret Gallery</h2>
-    <div class="secret-gallery">
-      <div class="secret-item">
-        <img src="https://picsum.photos/600/400?random=1" alt="Secret Image 1" class="secret-image" data-caption="Beautiful Random Scene 1">
-        <p class="secret-caption">Beautiful Random Scene 1</p>
-      </div>
-      <div class="secret-item">
-        <img src="https://picsum.photos/600/400?random=2" alt="Secret Image 2" class="secret-image" data-caption="Beautiful Random Scene 2">
-        <p class="secret-caption">Beautiful Random Scene 2</p>
-      </div>
-      <div class="secret-item">
-        <img src="https://picsum.photos/600/400?random=3" alt="Secret Image 3" class="secret-image" data-caption="Beautiful Random Scene 3">
-        <p class="secret-caption">Beautiful Random Scene 3</p>
-      </div>
-    </div>
-    <!-- Button to open note screen -->
-    <button class="note-button" id="openNote">Open Secret Note</button>
-  </div>
-
-  <!-- Fullscreen modal for images -->
-  <div class="lightbox" id="lightbox">
-    <span class="lightbox-close" id="lightboxClose">✕</span>
-    <img class="lightbox-img" id="lightboxImg" src="" alt="">
-    <p class="lightbox-caption" id="lightboxCaption"></p>
-  </div>
-
-  <!-- Note screen -->
-  <div class="note-screen" id="noteScreen">
-    <button class="close-note" id="closeNote">✕</button>
-    <h2>Teorija</h2>
-    <p>Brīvās svārstības rodas iekšējo spēku iedarbībā pēc tam, kad svārstību sistēma tiek izvirzīta no līdzsvara stāvokļa.
-      Tādas svārstības ir rimstošas. <br><br>Uzspiestās svārstības ir svārstības, ko veic ķermeņi periodiski mainīgu ārējo spēku iedarbībā. Tādas svārstības ir nerimstošas.
-    Brīvās svārstības rodas iekšējo spēku iedarbībā pēc tam, kad svārstību sistēma tiek izvirzīta no līdzsvara stāvokļa.
-      
-      Kustību, kas atkārtojas, sauc par periodisko kustību. Tāpēc svārstību kustībai piemīt periodiskums.
-Uzspiestās svārstības ir periodiskā kustība.
- 
-Svārstību sistēmas enerģija ar laiku samazinās, ja nav enerģijas pieplūduma. Uzspiestās svārstības ir nerimstošas svārstības, jo uz sistēmu spēks darbojas arī svārstību laikā.
- 
-Harmoniskas svārstības norisinās pēc sinusa vai kosinusa likuma. Brīvās svārstības nav harmoniskas.
- 
-Brīvo svārstību skaits ir atkarīgs no vides blīvuma, jo svārstības ir rimstošas.</p>
+    <h2>Secret Drive</h2>
+    <iframe 
+      src="https://drive.google.com/embeddedfolderview?id=1ImXg_5Qp68OX_ECfVItgPxiN40178CZ_#list" 
+      style="width:100%; height:80vh; border:0;" 
+      title="Google Drive Folder">
+    </iframe>
   </div>
 
   <script>
@@ -475,9 +305,6 @@ Brīvo svārstību skaits ir atkarīgs no vides blīvuma, jo svārstības ir rim
     const cancelCode = document.getElementById('cancelCode');
     const secretScreen = document.getElementById('secretScreen');
     const closeSecret = document.getElementById('closeSecret');
-    const openNote = document.getElementById('openNote');
-    const noteScreen = document.getElementById('noteScreen');
-    const closeNote = document.getElementById('closeNote');
 
     // Show code modal when secret button is clicked
     secretButton.addEventListener('click', () => {
@@ -525,39 +352,6 @@ Brīvo svārstību skaits ir atkarīgs no vides blīvuma, jo svārstības ir rim
         codeModal.style.display = 'none';
         codeInput.value = '';
       }
-    });
-
-    // Lightbox functionality
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightboxImg');
-    const lightboxCaption = document.getElementById('lightboxCaption');
-    const lightboxClose = document.getElementById('lightboxClose');
-
-    document.querySelectorAll('.secret-image').forEach(img => {
-      img.addEventListener('click', () => {
-        lightbox.style.display = 'flex';
-        lightboxImg.src = img.src;
-        lightboxCaption.textContent = img.dataset.caption || img.alt;
-      });
-    });
-
-    lightboxClose.addEventListener('click', () => {
-      lightbox.style.display = 'none';
-    });
-
-    lightbox.addEventListener('click', (e) => {
-      if (e.target === lightbox) {
-        lightbox.style.display = 'none';
-      }
-    });
-
-    // Note screen functionality
-    openNote.addEventListener('click', () => {
-      noteScreen.style.display = 'flex';
-    });
-
-    closeNote.addEventListener('click', () => {
-      noteScreen.style.display = 'none';
     });
   </script>
 </body>
