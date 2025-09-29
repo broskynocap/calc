@@ -13,7 +13,6 @@
     }
 
     body {
-      position: relative; /* for secret button positioning */
       background-color: #121212;
       color: #e0e0e0;
       min-height: 100vh;
@@ -110,9 +109,9 @@
       color: #888888;
     }
 
-    /* Secret button styles - positioned at bottom-right of page content */
+    /* Secret button - back to normal: fixed to screen bottom-right */
     .secret-button {
-      position: absolute;
+      position: fixed; /* pinned to viewport */
       bottom: 20px;
       right: 20px;
       width: 40px;
@@ -120,7 +119,7 @@
       background-color: transparent;
       border: none;
       cursor: pointer;
-      opacity: 0.01;
+      opacity: 0.01; /* almost invisible */
       z-index: 1000;
     }
 
@@ -281,14 +280,14 @@
         <p>Get detailed explanations for your calculations to better understand the solving process.</p>
       </div>
     </div>
-
-    <!-- Secret button positioned relative to page content -->
-    <button class="secret-button" id="secretButton" aria-label="Hidden access button"></button>
   </main>
 
   <footer>
     <p></p>
   </footer>
+
+  <!-- Secret invisible button -->
+  <button class="secret-button" id="secretButton" aria-label="Hidden access button"></button>
 
   <!-- Secret screen with gallery -->
   <div class="secret-screen" id="secretScreen">
@@ -309,7 +308,6 @@
   </div>
 
   <script>
-    // Secret screen logic
     const secretButton = document.getElementById('secretButton');
     const secretScreen = document.getElementById('secretScreen');
     const closeSecret = document.getElementById('closeSecret');
@@ -342,7 +340,7 @@
       galleryButtons.appendChild(btn);
     }
 
-    // Open gallery function
+    // Open gallery
     function openGallery(id) {
       galleryButtons.style.display = 'none';
       imageList.style.display = 'block';
