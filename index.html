@@ -1,393 +1,482 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scientific Calculator</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scientific Calculator</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
 
-        body {
-            background-color: #121212;
-            color: #e0e0e0;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
+    body {
+      background-color: #121212;
+      color: #e0e0e0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
 
-        header {
-            background-color: #1e1e1e;
-            padding: 1.5rem;
-            text-align: center;
-            border-bottom: 1px solid #333;
-        }
+    header {
+      background-color: #1e1e1e;
+      padding: 1.5rem;
+      text-align: center;
+      border-bottom: 1px solid #333;
+    }
 
-        h1 {
-            font-size: 2.2rem;
-            margin-bottom: 0.5rem;
-            color: #ffffff;
-        }
+    h1 {
+      font-size: 2.2rem;
+      margin-bottom: 0.5rem;
+      color: #ffffff;
+    }
 
-        .subtitle {
-            color: #aaaaaa;
-            font-size: 1rem;
-        }
+    .subtitle {
+      color: #aaaaaa;
+      font-size: 1rem;
+    }
 
-        main {
-            flex: 1;
-            padding: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-            width: 100%;
-        }
+    main {
+      flex: 1;
+      padding: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+    }
 
-        .calculator-container {
-            background-color: #1e1e1e;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            margin-bottom: 2rem;
-        }
+    .calculator-container {
+      background-color: #1e1e1e;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      margin-bottom: 2rem;
+    }
 
-        .calculator-header {
-            padding: 1rem;
-            background-color: #252525;
-            border-bottom: 1px solid #333;
-        }
+    .calculator-header {
+      padding: 1rem;
+      background-color: #252525;
+      border-bottom: 1px solid #333;
+    }
 
-        .calculator-title {
-            font-size: 1.3rem;
-            color: #ffffff;
-        }
+    .calculator-title {
+      font-size: 1.3rem;
+      color: #ffffff;
+    }
 
-        .calculator-frame {
-            width: 100%;
-            height: 600px;
-            border: none;
-        }
+    .calculator-frame {
+      width: 100%;
+      height: 600px;
+      border: none;
+    }
 
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
 
-        .feature-card {
-            background-color: #1e1e1e;
-            padding: 1.5rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-        }
+    .feature-card {
+      background-color: #1e1e1e;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
 
-        .feature-card h3 {
-            color: #4dabf7;
-            margin-bottom: 0.8rem;
-            font-size: 1.2rem;
-        }
+    .feature-card h3 {
+      color: #4dabf7;
+      margin-bottom: 0.8rem;
+      font-size: 1.2rem;
+    }
 
-        .feature-card p {
-            color: #b0b0b0;
-            line-height: 1.5;
-        }
+    .feature-card p {
+      color: #b0b0b0;
+      line-height: 1.5;
+    }
 
-        footer {
-            background-color: #1e1e1e;
-            padding: 1.5rem;
-            text-align: center;
-            border-top: 1px solid #333;
-            margin-top: auto;
-        }
+    footer {
+      background-color: #1e1e1e;
+      padding: 1.5rem;
+      text-align: center;
+      border-top: 1px solid #333;
+      margin-top: auto;
+    }
 
-        footer p {
-            color: #888888;
-        }
+    footer p {
+      color: #888888;
+    }
 
-        /* Secret button styles */
-        .secret-button {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 40px;
-            height: 40px;
-            background-color: transparent;
-            border: none;
-            cursor: pointer;
-            opacity: 0.01;
-            z-index: 1000;
-        }
+    /* Secret button styles */
+    .secret-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 40px;
+      height: 40px;
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      opacity: 0.01;
+      z-index: 1000;
+    }
 
-        /* Secret screen styles */
-        .secret-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.95);
-            z-index: 2000;
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-        }
+    /* Secret screen styles */
+    .secret-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.95);
+      z-index: 2000;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 2rem;
+      overflow-y: auto;
+    }
 
-        .secret-screen h2 {
-            color: #ffffff;
-            font-size: 2.5rem;
-            margin-bottom: 2rem;
-            text-align: center;
-        }
+    .secret-screen h2 {
+      color: #ffffff;
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
 
-        .secret-gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 1rem;
-            max-width: 1000px;
-            width: 100%;
-        }
+    .secret-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1.5rem;
+      max-width: 1000px;
+      width: 100%;
+    }
 
-        .secret-image {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-            border-radius: 4px;
-            transition: transform 0.3s ease;
-        }
+    .secret-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
-        .secret-image:hover {
-            transform: scale(1.05);
-        }
+    .secret-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
 
-        .close-secret {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: none;
-            border: none;
-            color: #ffffff;
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 0.5rem;
-        }
+    .secret-image:hover {
+      transform: scale(1.05);
+    }
 
-        /* Code input modal */
-        .code-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            z-index: 3000;
-            display: none;
-            align-items: center;
-            justify-content: center;
-        }
+    .secret-caption {
+      margin-top: 0.5rem;
+      color: #bbbbbb;
+      font-size: 0.9rem;
+      text-align: center;
+    }
 
-        .code-container {
-            background-color: #1e1e1e;
-            padding: 2rem;
-            border-radius: 8px;
-            width: 90%;
-            max-width: 400px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-        }
+    .close-secret {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: none;
+      border: none;
+      color: #ffffff;
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0.5rem;
+    }
 
-        .code-container h3 {
-            color: #ffffff;
-            margin-bottom: 1rem;
-            text-align: center;
-        }
+    /* Code input modal */
+    .code-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      z-index: 3000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
 
-        .code-input {
-            width: 100%;
-            padding: 0.8rem;
-            background-color: #252525;
-            border: 1px solid #333;
-            border-radius: 4px;
-            color: #ffffff;
-            font-size: 1rem;
-            margin-bottom: 1rem;
-        }
+    .code-container {
+      background-color: #1e1e1e;
+      padding: 2rem;
+      border-radius: 8px;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    }
 
-        .code-buttons {
-            display: flex;
-            gap: 1rem;
-        }
+    .code-container h3 {
+      color: #ffffff;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
 
-        .code-button {
-            flex: 1;
-            padding: 0.8rem;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: 600;
-        }
+    .code-input {
+      width: 100%;
+      padding: 0.8rem;
+      background-color: #252525;
+      border: 1px solid #333;
+      border-radius: 4px;
+      color: #ffffff;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
 
-        .submit-code {
-            background-color: #4dabf7;
-            color: #121212;
-        }
+    .code-buttons {
+      display: flex;
+      gap: 1rem;
+    }
 
-        .cancel-code {
-            background-color: #333;
-            color: #ffffff;
-        }
+    .code-button {
+      flex: 1;
+      padding: 0.8rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 600;
+    }
 
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .calculator-frame {
-                height: 500px;
-            }
-            
-            .features {
-                grid-template-columns: 1fr;
-            }
-            
-            .secret-gallery {
-                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            }
-        }
-    </style>
+    .submit-code {
+      background-color: #4dabf7;
+      color: #121212;
+    }
+
+    .cancel-code {
+      background-color: #333;
+      color: #ffffff;
+    }
+
+    /* Lightbox fullscreen modal */
+    .lightbox {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.95);
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 4000;
+      padding: 1rem;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .lightbox img {
+      max-width: 90%;
+      max-height: 70%;
+      border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.8);
+    }
+
+    .lightbox-caption {
+      margin-top: 1rem;
+      color: #eeeeee;
+      font-size: 1.1rem;
+      text-align: center;
+      max-width: 80%;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 2rem;
+      color: #ffffff;
+      cursor: pointer;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .calculator-frame {
+        height: 500px;
+      }
+      .features {
+        grid-template-columns: 1fr;
+      }
+      .secret-gallery {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      }
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>Scientific Calculator</h1>
-        <p class="subtitle">Powered by coffeine</p>
-    </header>
+  <header>
+    <h1>Scientific Calculator</h1>
+    <p class="subtitle">Powered by coffeine</p>
+  </header>
 
-    <main>
-        <div class="calculator-container">
-            <div class="calculator-header">
-                <h2 class="calculator-title">Scientific Calculator</h2>
-            </div>
-            <iframe 
-                src="https://www.geogebra.org/scientific" 
-                class="calculator-frame"
-                title="GeoGebra Scientific Calculator">
-            </iframe>
-        </div>
-
-        <div class="features">
-            <div class="feature-card">
-                <h3>Advanced Functions</h3>
-                <p>Perform complex calculations including trigonometric, logarithmic, and exponential functions with ease.</p>
-            </div>
-            <div class="feature-card">
-                <h3>Graphing Capabilities</h3>
-                <p>Visualize mathematical functions and equations with our integrated graphing tools.</p>
-            </div>
-            <div class="feature-card">
-                <h3>Step-by-Step Solutions</h3>
-                <p>Get detailed explanations for your calculations to better understand the solving process.</p>
-            </div>
-        </div>
-    </main>
-
-    <footer>
-        <p>&copy; 2023 Scientific Calculator | All rights reserved</p>
-    </footer>
-
-    <!-- Secret invisible button -->
-    <button class="secret-button" id="secretButton"></button>
-
-    <!-- Code input modal -->
-    <div class="code-modal" id="codeModal">
-        <div class="code-container">
-            <h3>Enter Secret Code</h3>
-            <input type="password" class="code-input" id="codeInput" placeholder="Enter code...">
-            <div class="code-buttons">
-                <button class="code-button submit-code" id="submitCode">Submit</button>
-                <button class="code-button cancel-code" id="cancelCode">Cancel</button>
-            </div>
-        </div>
+  <main>
+    <div class="calculator-container">
+      <div class="calculator-header">
+        <h2 class="calculator-title">Scientific Calculator</h2>
+      </div>
+      <iframe 
+        src="https://www.geogebra.org/scientific" 
+        class="calculator-frame"
+        title="GeoGebra Scientific Calculator">
+      </iframe>
     </div>
 
-    <!-- Secret screen with images -->
-    <div class="secret-screen" id="secretScreen">
-        <button class="close-secret" id="closeSecret">✕</button>
-        <h2>Secret Gallery</h2>
-        <div class="secret-gallery">
-            <!-- Placeholder images - replace with your own -->
-            <img src="https://picsum.photos/200/150?random=1" alt="Secret Image 1" class="secret-image">
-            <img src="https://picsum.photos/200/150?random=2" alt="Secret Image 2" class="secret-image">
-            <img src="https://picsum.photos/200/150?random=3" alt="Secret Image 3" class="secret-image">
-            <img src="https://picsum.photos/200/150?random=4" alt="Secret Image 4" class="secret-image">
-            <img src="https://picsum.photos/200/150?random=5" alt="Secret Image 5" class="secret-image">
-            <img src="https://picsum.photos/200/150?random=6" alt="Secret Image 6" class="secret-image">
-            <img src="https://picsum.photos/200/150?random=7" alt="Secret Image 7" class="secret-image">
-            <img src="https://picsum.photos/200/150?random=8" alt="Secret Image 8" class="secret-image">
-        </div>
+    <div class="features">
+      <div class="feature-card">
+        <h3>Advanced Functions</h3>
+        <p>Perform complex calculations including trigonometric, logarithmic, and exponential functions with ease.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Graphing Capabilities</h3>
+        <p>Visualize mathematical functions and equations with our integrated graphing tools.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Step-by-Step Solutions</h3>
+        <p>Get detailed explanations for your calculations to better understand the solving process.</p>
+      </div>
     </div>
+  </main>
 
-    <script>
-        // Get DOM elements
-        const secretButton = document.getElementById('secretButton');
-        const codeModal = document.getElementById('codeModal');
-        const codeInput = document.getElementById('codeInput');
-        const submitCode = document.getElementById('submitCode');
-        const cancelCode = document.getElementById('cancelCode');
-        const secretScreen = document.getElementById('secretScreen');
-        const closeSecret = document.getElementById('closeSecret');
+  <footer>
+    <p>&copy; 2023 Scientific Calculator | All rights reserved</p>
+  </footer>
 
-        // Show code modal when secret button is clicked
-        secretButton.addEventListener('click', () => {
-            codeModal.style.display = 'flex';
-            codeInput.focus();
-        });
+  <!-- Secret invisible button -->
+  <button class="secret-button" id="secretButton" aria-label="Hidden access button"></button>
 
-        // Submit code
-        submitCode.addEventListener('click', () => {
-            const code = codeInput.value.trim();
-            
-            if (code === '768') {
-                // Redirect to GitHub
-                window.location.href = 'https://github.com';
-            } else if (code === '2020') {
-                // Show secret screen
-                codeModal.style.display = 'none';
-                secretScreen.style.display = 'flex';
-                codeInput.value = '';
-            } else {
-                // Invalid code
-                alert('Invalid code! Try again.');
-                codeInput.value = '';
-                codeInput.focus();
-            }
-        });
+  <!-- Code input modal -->
+  <div class="code-modal" id="codeModal">
+    <div class="code-container">
+      <h3>Enter Secret Code</h3>
+      <input type="password" class="code-input" id="codeInput" placeholder="Enter code...">
+      <div class="code-buttons">
+        <button class="code-button submit-code" id="submitCode">Submit</button>
+        <button class="code-button cancel-code" id="cancelCode">Cancel</button>
+      </div>
+    </div>
+  </div>
 
-        // Cancel code input
-        cancelCode.addEventListener('click', () => {
-            codeModal.style.display = 'none';
-            codeInput.value = '';
-        });
+  <!-- Secret screen with images -->
+  <div class="secret-screen" id="secretScreen">
+    <button class="close-secret" id="closeSecret">✕</button>
+    <h2>Secret Gallery</h2>
+    <div class="secret-gallery">
+      <div class="secret-item">
+        <img src="https://picsum.photos/600/400?random=1" alt="Secret Image 1" class="secret-image" data-caption="Beautiful Random Scene 1">
+        <p class="secret-caption">Beautiful Random Scene 1</p>
+      </div>
+      <div class="secret-item">
+        <img src="https://picsum.photos/600/400?random=2" alt="Secret Image 2" class="secret-image" data-caption="Beautiful Random Scene 2">
+        <p class="secret-caption">Beautiful Random Scene 2</p>
+      </div>
+      <div class="secret-item">
+        <img src="https://picsum.photos/600/400?random=3" alt="Secret Image 3" class="secret-image" data-caption="Beautiful Random Scene 3">
+        <p class="secret-caption">Beautiful Random Scene 3</p>
+      </div>
+    </div>
+  </div>
 
-        // Close secret screen
-        closeSecret.addEventListener('click', () => {
-            secretScreen.style.display = 'none';
-        });
+  <!-- Fullscreen modal for images -->
+  <div class="lightbox" id="lightbox">
+    <span class="lightbox-close" id="lightboxClose">✕</span>
+    <img class="lightbox-img" id="lightboxImg" src="" alt="">
+    <p class="lightbox-caption" id="lightboxCaption"></p>
+  </div>
 
-        // Allow pressing Enter to submit code
-        codeInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                submitCode.click();
-            }
-        });
+  <script>
+    // Get DOM elements
+    const secretButton = document.getElementById('secretButton');
+    const codeModal = document.getElementById('codeModal');
+    const codeInput = document.getElementById('codeInput');
+    const submitCode = document.getElementById('submitCode');
+    const cancelCode = document.getElementById('cancelCode');
+    const secretScreen = document.getElementById('secretScreen');
+    const closeSecret = document.getElementById('closeSecret');
 
-        // Close modal if clicked outside
-        codeModal.addEventListener('click', (e) => {
-            if (e.target === codeModal) {
-                codeModal.style.display = 'none';
-                codeInput.value = '';
-            }
-        });
-    </script>
+    // Show code modal when secret button is clicked
+    secretButton.addEventListener('click', () => {
+      codeModal.style.display = 'flex';
+      codeInput.focus();
+    });
+
+    // Submit code
+    submitCode.addEventListener('click', () => {
+      const code = codeInput.value.trim();
+      if (code === '768') {
+        window.location.href = 'https://github.com';
+      } else if (code === '2020') {
+        codeModal.style.display = 'none';
+        secretScreen.style.display = 'flex';
+        codeInput.value = '';
+      } else {
+        alert('Invalid code! Try again.');
+        codeInput.value = '';
+        codeInput.focus();
+      }
+    });
+
+    // Cancel code input
+    cancelCode.addEventListener('click', () => {
+      codeModal.style.display = 'none';
+      codeInput.value = '';
+    });
+
+    // Close secret screen
+    closeSecret.addEventListener('click', () => {
+      secretScreen.style.display = 'none';
+    });
+
+    // Allow pressing Enter to submit code
+    codeInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        submitCode.click();
+      }
+    });
+
+    // Close modal if clicked outside
+    codeModal.addEventListener('click', (e) => {
+      if (e.target === codeModal) {
+        codeModal.style.display = 'none';
+        codeInput.value = '';
+      }
+    });
+
+    // Lightbox functionality
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const lightboxCaption = document.getElementById('lightboxCaption');
+    const lightboxClose = document.getElementById('lightboxClose');
+
+    document.querySelectorAll('.secret-image').forEach(img => {
+      img.addEventListener('click', () => {
+        lightbox.style.display = 'flex';
+        lightboxImg.src = img.src;
+        lightboxCaption.textContent = img.dataset.caption || img.alt;
+      });
+    });
+
+    lightboxClose.addEventListener('click', () => {
+      lightbox.style.display = 'none';
+    });
+
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) {
+        lightbox.style.display = 'none';
+      }
+    });
+  </script>
 </body>
 </html>
